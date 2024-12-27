@@ -1,4 +1,4 @@
-// Copyright (c) FIRST and other WPILib contributors.
+/// Copyright (c) FIRST and other WPILib contributors.
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
@@ -23,11 +23,18 @@ public class RobotContainer {
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController m_driverController = new CommandXboxController(OperatorConstants.k_driverController);
 
+     Command driveFieldOrientedAngularVelocity = m_swerveSubsystem.driveCommand(
+      () -> MathUtil.applyDeadband(m_driverController.getLeftY() * DriveConstants.k_driveSpeed, DriveConstants.k_driveDeadBand ),
+      () -> MathUtil.applyDeadband(m_driverController.getLeftX() * DriveConstants.k_driveSpeed, DriveConstants.k_driveDeadBand ),
+      () -> m_driverController.getRightX() );
+
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
 
     // Configure the trigger bindings
     configureBindings();
+
+  
 
     // Makes the drive command the default command (good!)
     m_swerveSubsystem.setDefaultCommand(driveFieldOrientedAngularVelocity);
@@ -38,11 +45,7 @@ public class RobotContainer {
   
   // Command that takes Xbox Controller Inputs and allows robot to drive
   // NOTE: getLeftY and getLeftX are opposite for a reason!!! It is correct!!
-  Command driveFieldOrientedAngularVelocity = m_swerveSubsystem.driveCommand(
-      () -> MathUtil.applyDeadband(m_driverController.getLeftY() * DriveConstants.k_driveSpeed, DriveConstants.k_driveDeadBand),
-      () -> MathUtil.applyDeadband(m_driverController.getLeftX() * DriveConstants.k_driveSpeed, DriveConstants.k_driveDeadBand),
-      () -> m_driverController.getRightX() * DriveConstants.k_turnRate);
-
+ 
   // Use this to pass the autonomous command to Robot.java
   // Returns the command to run in autonomous
   // public Command getAutonomousCommand() {

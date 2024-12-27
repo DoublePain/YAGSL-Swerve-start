@@ -3,7 +3,7 @@
     "front": -13.9,
     "left": 14
   },
-  "absoluteEncoderOffset": 167.4,
+  "absoluteEncoderOffset": 309.2,
   "drive": {
     "type": "talonfx",
     "id": 1,
@@ -16,12 +16,12 @@
   },
   "encoder": {
     "type": "canandmag",
-    "id": 3,
+    "id": 11,
     "canbus": null
   },
   "inverted": {
-    "drive": true,
+    "drive": false,
     "angle": false
   },
-  "absoluteEncoderInverted": true
+  "absoluteEncoderInverted": false
 }
