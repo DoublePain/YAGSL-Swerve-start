@@ -43,6 +43,13 @@ public class RobotContainer {
   // Trigger & Button Bindings!
   private void configureBindings() {}
   
+
+  public Command getAutonomousCommand()
+  {
+    // An example command will be run in autonomous
+    return m_swerveSubsystem.getAutonomousCommand("New Auto");
+  }
+
   // Command that takes Xbox Controller Inputs and allows robot to drive
   // NOTE: getLeftY and getLeftX are opposite for a reason!!! It is correct!!
  
