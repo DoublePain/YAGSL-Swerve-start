@@ -1,2 +1,2 @@
-Little experience with coding, let alone coding robots so bear with me lol. This is my first time trying YAGSL so i'm still getting 
-the hang of it but it will be a huge resource for 2025 if I can get it working for my team
+Yagsl setup for a wcp swerve xs module with krakens for drive and neo 550's run by spark max's for the angular motors. We are also using a navx for our gyro. 
+Set up a little bit up pathplanner and limelight to see what we can do for now.
