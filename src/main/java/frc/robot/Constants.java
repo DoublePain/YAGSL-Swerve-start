@@ -4,46 +4,23 @@
 
 package frc.robot;
 
-import edu.wpi.first.math.util.Units;
-
+/**
+ * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
+ * constants. This class should not be used for any other purpose. All constants should be declared
+ * globally (i.e. public static). Do not put anything functional in this class.
+ *
+ * <p>It is advised to statically import this class (or one of its inner classes) wherever the
+ * constants are needed, to reduce verbosity.
+ */
 public final class Constants {
-
-  // Constants for controller IDs
-  public static final class OperatorConstants {
-    public static final int k_driverController = 0;
+  public static class OperatorConstants {
+    public static final int kDriverControllerPort = 0;
+    public static final double deadband = 0.05;
+  
   }
 
-  // Constants for Kraken Drivetrain!
-  public static final class SwerveConstants {
-    public static final double k_maxSpeed = Units.feetToMeters(18.9);
-    public static final double k_wheelDiameter = Units.inchesToMeters(2);
-    public static final double k_trackwidth = Units.inchesToMeters(28);
-    public static final double k_Fvelocity = (1.8);
-    public static final double k_Svelocity = (1.8);
-    public static final double k_AngularVelocity = (.18);
-    public static final double k_FLXOffset = Units.inchesToMeters(13.5);
-    public static final double k_FLYOffset = Units.inchesToMeters(13.5);
-    public static final double k_FRXOffset = Units.inchesToMeters(13.5);
-    public static final double k_FRYOffset = Units.inchesToMeters(-13.5);
-    public static final double k_RRXOffset = Units.inchesToMeters(-13.5);
-    public static final double k_RRYOffset = Units.inchesToMeters(13.5);
-    public static final double k_RLXOffset = Units.inchesToMeters(13.5);
-    public static final double k_RLYOffset = Units.inchesToMeters(-13.5);
-    public static final double k_WFLOffset = 150; 
-    public static final double k_WFROffset = 0;
-    public static final double k_WRLOffset = 170;
-    public static final double k_WRROffset = 0;
-
-  } 
-
-  // Constants for controller input!
-  public static final class DriveConstants {
-    public static final double k_driveDeadBand = 0.05;
-    public static final double k_driveSpeed = -1;
-    public static final double k_turnRate = -1;
-    public static final int k_frontLeftAngleMotorID = 7; //7
-    public static final int k_frontRightAngleMotorID = 5; //5
-    public static final int k_rearLeftAngleMotorID = 3; //2
-    public static final int k_rearRightAngleMotorID = 2; //3
+  public static class SwerveConstants {
+    public static final double MAX_SPEED = 4.5;
   }
+
 }
