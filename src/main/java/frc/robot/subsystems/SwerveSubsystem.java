@@ -179,6 +179,8 @@ swerveDrive.driveFieldOriented(velocity);
 public Command driveFieldOriented(Supplier<ChassisSpeeds> velocity){
   return run(() -> {
     swerveDrive.driveFieldOriented(velocity.get());
+    swerveDrive.getMaximumChassisAngularVelocity();
+    swerveDrive.getMaximumChassisVelocity();
   });
 }
 }

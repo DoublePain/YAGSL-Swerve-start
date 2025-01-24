@@ -20,10 +20,10 @@ public final class Constants {
   }
 
   public static class SwerveConstants {
-    public static final double MAX_SPEED = 4.5;
+    public static final double MAX_SPEED = 10;
   }
   public static class DriveConstants {
-    public static final double k_driveSpeed = 4.5;
+    public static final double k_driveSpeed = 10;
     public static final double k_driveDeadBand = 0.05;
   }
 
