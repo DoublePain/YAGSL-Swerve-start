@@ -15,9 +15,12 @@ import java.util.function.Supplier;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.commands.PathPlannerAuto;
+import com.pathplanner.lib.commands.PathfindingCommand;
 import com.pathplanner.lib.config.PIDConstants;
 import com.pathplanner.lib.config.RobotConfig;
 import com.pathplanner.lib.controllers.PPHolonomicDriveController;
+import com.pathplanner.lib.path.PathPlannerPath;
+
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
 import swervelib.parser.SwerveParser;
@@ -60,6 +63,9 @@ SwerveDrive  swerveDrive;
       throw new RuntimeException(e);
     }
 
+    swerveDrive.setModuleEncoderAutoSynchronize(false, 1);
+    swerveDrive.setCosineCompensator(false);
+
   }
 
   
@@ -98,7 +104,9 @@ SwerveDrive  swerveDrive;
     // This method will be called once per scheduler run during simulation
   }
 
-    public void setupPathPlanner()
+  
+
+   public void setupPathPlanner()
   {
     // Load the RobotConfig from the GUI settings. You should probably
     // store this in your Constants file
@@ -110,11 +118,11 @@ SwerveDrive  swerveDrive;
       final boolean enableFeedforward = true;
       // Configure AutoBuilder last
       AutoBuilder.configure(
-          swerveDrive::getPose,
-          // Robot pose supplier
-          swerveDrive::resetOdometry,
-          // Method to reset odometry (will be called if your auto has a starting pose)
-          swerveDrive::getRobotVelocity,
+        swerveDrive::getPose,
+        // Robot pose supplier
+        swerveDrive::resetOdometry,
+        // Method to reset odometry (will be called if your auto has a starting pose)
+        swerveDrive::getRobotVelocity,
           // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
           (speedsRobotRelative, moduleFeedForwards) -> {
             if (enableFeedforward)
@@ -160,6 +168,10 @@ SwerveDrive  swerveDrive;
       // Handle exception as needed
       e.printStackTrace();
     }
+
+    //Preload PathPlanner Path finding
+    // IF USING CUSTOM PATHFINDER ADD BEFORE THIS LINE
+    PathfindingCommand.warmupCommand().schedule();
   }
 
     public Command getAutonomousCommand(String pathName)
@@ -167,7 +179,13 @@ SwerveDrive  swerveDrive;
     // Create a path following command using AutoBuilder. This will also trigger event markers.
     return new PathPlannerAuto(pathName);
   }
-  
+   /**
+   * Get the path follower with events.
+   *
+   * @param pathName PathPlanner path name.
+   * @return {@link AutoBuilder#followPath(PathPlannerPath)} path command.
+   */
+
   public SwerveDrive getSwerveDrive() {
    return swerveDrive;
   }
