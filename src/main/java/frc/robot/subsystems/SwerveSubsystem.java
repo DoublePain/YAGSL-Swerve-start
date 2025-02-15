@@ -20,7 +20,6 @@ import com.pathplanner.lib.config.PIDConstants;
 import com.pathplanner.lib.config.RobotConfig;
 import com.pathplanner.lib.controllers.PPHolonomicDriveController;
 import com.pathplanner.lib.path.PathPlannerPath;
-
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
 import swervelib.parser.SwerveParser;
@@ -65,6 +64,7 @@ SwerveDrive  swerveDrive;
 
     swerveDrive.setModuleEncoderAutoSynchronize(false, 1);
     swerveDrive.setCosineCompensator(false);
+    setupPathPlanner();
 
   }
 
