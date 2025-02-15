@@ -1,52 +1,72 @@
 {
-  "HALProvider": {
-    "Timing": {
-      "window": {
-        "visible": false
-      }
-    }
-  },
   "NTProvider": {
     "types": {
       "/FMSInfo": "FMSInfo",
+      "/SmartDashboard/Encoders": "Alerts",
       "/SmartDashboard/Field": "Field2d",
-      "/SmartDashboard/navX-Sensor[2]": "Gyro",
-      "/SmartDashboard/navX-Sensor[4]": "Gyro"
+      "/SmartDashboard/IMU": "Alerts",
+      "/SmartDashboard/JSON": "Alerts",
+      "/SmartDashboard/Motors": "Alerts",
+      "/SmartDashboard/Swerve Drive": "Alerts"
     },
     "windows": {
       "/SmartDashboard/Field": {
-        "bottom": 1476,
-        "height": 8.210550308227539,
-        "left": 150,
-        "right": 2961,
-        "top": 79,
-        "width": 16.541748046875,
-        "window": {
-          "visible": true
-        }
+        "OdometryPose": {
+          "arrowColor": [
+            0.9789029359817505,
+            0.9789029359817505,
+            0.9789029359817505,
+            255.0
+          ],
+          "arrowSize": 23,
+          "color": [
+            1.0,
+            1.0,
+            1.0,
+            255.0
+          ],
+          "style": "Box/Image"
+        },
+        "Robot": {
+          "arrowColor": [
+            0.12236285209655762,
+            0.3889870047569275,
+            1.0,
+            255.0
+          ],
+          "color": [
+            1.0,
+            1.0,
+            1.0,
+            255.0
+          ]
+        },
+        "XModules": {
+          "arrowColor": [
+            0.9156118035316467,
+            0.4095141589641571,
+            0.7682669162750244,
+            255.0
+          ],
+          "arrowSize": 21,
+          "color": [
+            1.0,
+            1.0,
+            1.0,
+            255.0
+          ]
+        },
+        "bottom": 544,
+        "builtin": "2023 Charged Up",
+        "height": 8.013679504394531,
+        "left": 46,
+        "right": 1088,
+        "top": 36,
+        "width": 16.541748046875
       }
     }
   },
-  "NetworkTables": {
-    "Retained Values": {
-      "open": false
-    }
-  },
   "NetworkTables Info": {
-    "AdvantageScope@1": {
-      "open": true
-    },
-    "Clients": {
-      "open": true
-    },
-    "Connections": {
-      "open": true
-    },
-    "Server": {
-      "open": true
-    }
-  },
-  "NetworkTables View": {
-    "visible": false
+    "visible": true
   }
 }
