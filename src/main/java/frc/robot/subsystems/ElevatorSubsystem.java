@@ -1,11 +1,6 @@
 package frc.robot.subsystems;
 
 
-import au.grapplerobotics.LaserCan;
-import au.grapplerobotics.interfaces.LaserCanInterface.Measurement;
-import au.grapplerobotics.interfaces.LaserCanInterface.TimingBudget;
-import au.grapplerobotics.interfaces.LaserCanInterface.RangingMode;
-import au.grapplerobotics.interfaces.LaserCanInterface.RegionOfInterest;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.sim.SparkMaxSim;
 import com.revrobotics.spark.SparkBase;
@@ -16,17 +11,10 @@ import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.ElevatorFeedforward;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.system.plant.DCMotor;
-import edu.wpi.first.math.trajectory.TrapezoidProfile;
-import edu.wpi.first.wpilibj.Alert;
-import edu.wpi.first.wpilibj.Alert.AlertType;
-import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.RobotBase;
-import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj.simulation.BatterySim;
-import edu.wpi.first.wpilibj.simulation.DIOSim;
 import edu.wpi.first.wpilibj.simulation.ElevatorSim;
 import edu.wpi.first.wpilibj.simulation.RoboRioSim;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -34,14 +22,12 @@ import frc.robot.Constants.ElevatorConstants;
 //import frc.robot.Constants.AlgaeArmConstants;
 import edu. wpi. first. math. trajectory. TrapezoidProfile.Constraints;
 import frc.robot.RobotMath.Elevator;
-
-import static au.grapplerobotics.interfaces.LaserCanInterface.LASERCAN_STATUS_VALID_MEASUREMENT;
 import static edu.wpi.first.units.Units.*;
 
 public class ElevatorSubsystem extends SubsystemBase {
     //setUp
     private final DCMotor m_elevatorGearbox = DCMotor.getNEO(1);
-    private final SparkMax m_motor = new SparkMax(13, SparkLowLevel.MotorType.kBrushless);
+    private final SparkMax m_motor = new SparkMax(Constants.IDConstants.Elevator_Left_ID, SparkLowLevel.MotorType.kBrushless);
     private final SparkMaxSim m_motorSim = new SparkMaxSim(m_motor, m_elevatorGearbox);
     private final RelativeEncoder m_encoder = m_motor.getEncoder();
     private final ProfiledPIDController m_controller = new ProfiledPIDController(ElevatorConstants.Kelevatorkp,

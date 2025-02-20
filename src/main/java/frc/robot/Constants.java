@@ -82,21 +82,27 @@ public static final MechanismLigament2d elevatorMech;
                                                         6,
                                                         new Color8Bit(Color.kRed)));
   }
-/* 
-   static{
-    elevatorCarriage = Constants.sideview.getRoot("Elevator Carriage",
-    Inches.of(31).in(Meters),
-                                                        ElevatorConstants.kElevatorStartingHeightSim.in(Meters));
-    ElevatorMech = elevatorCarriage.append(new MechanismLigament2d("Arm",
-    Inches.of(31).in(Meters),
-                                                        0,
-                                                        6,
-                                                        new Color8Bit(Color.kOrange)));
-    TowerMech = elevatorCarriage.append(new MechanismLigament2d("Elevator",
-                                                        ElevatorConstants.kElevatorLength,
-                                                        ElevatorConstants.kElevatorStartingAngle.in(Degrees),
-                                                        6,
-                                                        new Color8Bit(Color.kRed)));
+
+  public static class IDConstants {
+    public static final int Outtake_Left_ID = 11;
+    public static final int Outtake_Right_ID = 12;
+    public static final int Elevator_Left_ID = 13;
+    public static final int Elevator_Right_ID = 14;
+    public static final int Algae_Pivot_ID = 15;
+    public static final int Algae_Intake_ID = 16;
+    public static final int kLaserId = 17;
+    
   }
-  */
+
+  public static class Coral_Algae_Constants {
+    public static final double kIntakeSpeed = 0.3;
+    public static final double kReverseSpeed = -0.3;
+    public static final double kL1Speed = 0.4;
+    public static final double kL24Speed = 0.4;
+    public static final double kIndexSpeed = 0.1;
+    public static final double kSpeedDifference = kL1Speed * 0.5;
+  }
+
+  
+
 }
