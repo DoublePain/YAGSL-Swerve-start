@@ -8,9 +8,8 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.SwerveSubsystem;
 import swervelib.SwerveInputStream;
-
+import frc.robot.subsystems.CoralSubsystem;
 import com.pathplanner.lib.auto.NamedCommands;
-
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -19,7 +18,10 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-
+import frc.robot.commands.IntakeCommand;
+import frc.robot.commands.ReverseCommand;
+import frc.robot.commands.ScoreCoralCommand;
+import frc.robot.commands.StopCoralCommand;
 /**
  * This class is where the bulk of the robot should be declared. Since
  * Command-based is a
@@ -34,11 +36,16 @@ public class RobotContainer {
 
   // The robot's subsystems and commands are defined here...
 
-  private final SwerveSubsystem drivebase = new SwerveSubsystem();
-  private final ElevatorSubsystem    elevator         = new ElevatorSubsystem();
-  // Replace with CommandPS4Controller or CommandJoystick if needed
+  private final SwerveSubsystem      drivebase         = new SwerveSubsystem();
+  private final ElevatorSubsystem    elevator          = new ElevatorSubsystem();
+  private final CoralSubsystem       m_coralSubsystem = new CoralSubsystem();
+  
+  
   private final CommandXboxController m_driverController = new CommandXboxController(
       OperatorConstants.kDriverControllerPort);
+
+      private final CommandXboxController m_driverController2 = new CommandXboxController(
+        OperatorConstants.kDriverControllerPort2);
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.

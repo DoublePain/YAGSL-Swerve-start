@@ -1,6 +1,6 @@
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj2.command.Command;
+
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkMax;
@@ -9,7 +9,7 @@ import frc.robot.Constants;
 import edu.wpi.first.wpilibj.smartdashboard.*;
 
 public class CoralSubsystem extends SubsystemBase {
-    private static CoralSubsystem mInstance;
+
 
     // Laser can for detecting coral and Outtake motors
     private SparkMax m_LeftMotor;
@@ -27,7 +27,7 @@ public class CoralSubsystem extends SubsystemBase {
 
     private IntakeState mState = IntakeState.NONE;
 
-    private CoralSubsystem() {
+    public CoralSubsystem() {
         // Initialize hardware
         m_LeftMotor = new SparkMax(Constants.IDConstants.Outtake_Left_ID, MotorType.kBrushless);
         m_RightMotor = new SparkMax(Constants.IDConstants.Outtake_Right_ID, MotorType.kBrushless);
@@ -43,13 +43,7 @@ public class CoralSubsystem extends SubsystemBase {
         }
     }
 
-    // Singleton pattern to ensure only one instance of the subsystem
-    public static CoralSubsystem getInstance() {
-        if (mInstance == null) {
-            mInstance = new CoralSubsystem();
-        }
-        return mInstance;
-    }
+  
 
     // Method to set the speed of both motors
     public void setSpeed(double speed) {
