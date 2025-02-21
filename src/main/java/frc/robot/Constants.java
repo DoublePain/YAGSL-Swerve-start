@@ -102,6 +102,38 @@ public static final MechanismLigament2d elevatorMech;
     public static final double kL24Speed = 0.4;
     public static final double kIndexSpeed = 0.1;
     public static final double kSpeedDifference = kL1Speed * 0.5;
+    public static final double kWristEncoderId = 20;
+    public static final int mWristEncoderID1 = 0;
+    public static final int mWristEncoderID2 = 1;
+    public static final boolean mWristEncoderInvert = true;
+    public static final int kMaxWristCurrent = 10;
+
+    
+    public static final double kWristP = 0.01;
+    public static final double kWristI = 0.0;
+    public static final double kWristD = 0.0;
+
+    public static final double kWristKS = 0.0;
+    public static final double kWristKG = 0.0;
+    public static final double kWristKV = 0.100;
+    public static final double kWristKA = 0.0;
+
+    public static final double kWristMaxVelocity = 690.0;
+    public static final double kWristMaxAcceleration = 1380.0;
+
+    
+    public static final double kStowAngle = 233.0;
+    public static final double kDeAlgaeAngle = 215.0;
+    public static final double kGroundIntakeAngle = 162.0;
+
+    // INTAKE
+    public static final int kMaxIntakeCurrent = 20;
+
+    public static final double kAlgaeIntakeSpeed = 0.6;
+    public static final double kEjectSpeed = -0.3;
+    public static final double kGroundIntakeSpeed = -0.3;
+    
+    public static final double kWristOffset = 141.0;
   }
 
   

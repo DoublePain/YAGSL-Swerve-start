@@ -8,6 +8,7 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.SwerveSubsystem;
 import swervelib.SwerveInputStream;
+import frc.robot.subsystems.AlgaeSubsystem;
 import frc.robot.subsystems.CoralSubsystem;
 import com.pathplanner.lib.auto.NamedCommands;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -22,6 +23,11 @@ import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.ReverseCommand;
 import frc.robot.commands.ScoreCoralCommand;
 import frc.robot.commands.StopCoralCommand;
+import frc.robot.commands.GrabAlgaeCommand;
+import frc.robot.commands.StopAlgaeCommand;
+import frc.robot.commands.StowCommand;
+
+
 /**
  * This class is where the bulk of the robot should be declared. Since
  * Command-based is a
@@ -36,10 +42,10 @@ public class RobotContainer {
 
   // The robot's subsystems and commands are defined here...
 
-  private final SwerveSubsystem      drivebase         = new SwerveSubsystem();
-  private final ElevatorSubsystem    elevator          = new ElevatorSubsystem();
-  private final CoralSubsystem       m_coralSubsystem = new CoralSubsystem();
-  
+  private final SwerveSubsystem      drivebase          =  new SwerveSubsystem();
+  private final ElevatorSubsystem    elevator           =  new ElevatorSubsystem();
+  private final CoralSubsystem       m_coralSubsystem   =  new CoralSubsystem();
+  private final AlgaeSubsystem       algaeSubsystem     =  new AlgaeSubsystem();
   
   private final CommandXboxController m_driverController = new CommandXboxController(
       OperatorConstants.kDriverControllerPort);
@@ -113,6 +119,16 @@ public class RobotContainer {
     elevator.setDefaultCommand(elevator.setElevatorHeight(1));
    SmartDashboard.putData("Side View", Constants.sideView);
     configureBindings();
+    
+    m_driverController.button(1).whileTrue(new GrabAlgaeCommand(algaeSubsystem));  // Button 1 for GrabAlgaeCommand
+    m_driverController.button(1).whileFalse(new StopAlgaeCommand(algaeSubsystem));  // Button 1 for StopAlgaeCommand
+
+    m_driverController.button(2).whileTrue(new ScoreCoralCommand(m_coralSubsystem,true)); // Button 6 for ScoreCoralCommand
+    m_driverController.button(3).whileTrue(new ScoreCoralCommand(m_coralSubsystem,false)); 
+    
+    m_driverController.button(2).whileFalse(new StopCoralCommand(m_coralSubsystem)).and
+  (m_driverController.button(3).whileFalse(new StopCoralCommand(m_coralSubsystem)));  // Button 7 for StopCoralCommand
+    
 
     //drivebase.setDefaultCommand(driveFieldOrientedAngularVelocity);
     SmartDashboard.putData(CommandScheduler.getInstance());
@@ -142,8 +158,12 @@ public class RobotContainer {
 
 m_driverController.button(1).whileTrue(elevator.setElevatorHeight(4));
  
-
-
+  // Example: Mapping button 1 to the `ScoreCoralCommand`
+   m_driverController2.button(11).whileTrue(elevator.setGoal(3));
+   m_driverController2.button(12).whileTrue(elevator.setGoal(6));
+   m_driverController2.button(13).whileTrue(elevator.setGoal(9));
+   m_driverController.button(1).whileTrue(driveFieldOrientedDirectAngleKeyboard);
+   
 }
   
   /**
