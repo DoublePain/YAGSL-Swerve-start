@@ -28,7 +28,6 @@ public class ElevatorSubsystem extends SubsystemBase {
     //setUp
     private final DCMotor m_elevatorGearbox = DCMotor.getNEO(1);
     private final SparkMax m_motor = new SparkMax(Constants.IDConstants.Elevator_Left_ID, SparkLowLevel.MotorType.kBrushless);
-    private final SparkMax m_motor2 = new SparkMax(Constants.IDConstants.Elevator_Right_ID, SparkLowLevel.MotorType.kBrushless);
     private final SparkMaxSim m_motorSim = new SparkMaxSim(m_motor, m_elevatorGearbox);
     private final RelativeEncoder m_encoder = m_motor.getEncoder();
     private final ProfiledPIDController m_controller = new ProfiledPIDController(ElevatorConstants.Kelevatorkp,
@@ -36,6 +35,17 @@ public class ElevatorSubsystem extends SubsystemBase {
             ElevatorConstants.Kelevatorkd,
             new Constraints(ElevatorConstants.kMaxVelocity,
                     ElevatorConstants.KMaxAccel));
+
+                    private final DCMotor m_elevatorGearbox2 = DCMotor.getNEO(1);
+                    private final SparkMax m_motor2 = new SparkMax(Constants.IDConstants.Elevator_Left_ID, SparkLowLevel.MotorType.kBrushless);
+                    private final SparkMaxSim m_motorSim2 = new SparkMaxSim(m_motor, m_elevatorGearbox);
+                    private final RelativeEncoder m_encoder2 = m_motor.getEncoder();
+                    private final ProfiledPIDController m_controller2 = new ProfiledPIDController(ElevatorConstants.Kelevatorkp,
+                            ElevatorConstants.Kelevatorki,
+                            ElevatorConstants.Kelevatorkd,
+                            new Constraints(ElevatorConstants.kMaxVelocity,
+                                    ElevatorConstants.KMaxAccel));
+                                    
     private final ElevatorFeedforward m_feedForward = new ElevatorFeedforward(ElevatorConstants.kElevatorS,
             ElevatorConstants.kElevatorG,
             ElevatorConstants.kElevatorV,
