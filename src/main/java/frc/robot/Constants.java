@@ -25,8 +25,8 @@ public final class Constants {
 
   // Constants for controller IDs
   public static final class OperatorConstants {
-    public static final int kDriverControllerPort = 0;
-    public static final int kDriverControllerPort2 =1;
+    public static final int kDriverControllerPort = 1;
+    public static final int kDriverControllerPort2 =0;
     public static final double deadband = 0.05;
   }
 
@@ -117,7 +117,7 @@ public final class Constants {
     public static final int Elevator_Right_ID = 14;
     public static final int Algae_Pivot_ID = 15;
     public static final int Algae_Intake_ID = 16;
-    public static final int kLaserId =17;
+    public static final int kLaserId =20;
   }
 
   public static class Coral_Algae_Constants {

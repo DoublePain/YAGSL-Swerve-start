@@ -139,6 +139,7 @@ public class ElevatorSubsystem extends SubsystemBase
             .follow(m_motor, true);
 
     m_motorRight.configure(followerConfig, ResetMode.kNoResetSafeParameters, PersistMode.kPersistParameters);
+    //followerConfig.inverted(true);
 
     // Publish Mechanism2d to SmartDashboard
     // To view the Elevator visualization, select Network Tables -> SmartDashboard -> Elevator Sim

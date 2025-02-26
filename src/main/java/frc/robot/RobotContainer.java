@@ -133,9 +133,9 @@ public class RobotContainer {
     m_driverController.button(2).whileFalse(new StopCoralCommand(m_coralSubsystem)).and
   (m_driverController.button(3).whileFalse(new StopCoralCommand(m_coralSubsystem)));  // Button 7 for StopCoralCommand
 
-  m_driverController2.button(1).whileTrue(m_elevatorSubsystem.setElevatorHeight(0.6));
-  m_driverController2.button(2).whileTrue(m_elevatorSubsystem.setElevatorHeight(6));
-  m_driverController2.button(3).whileTrue(m_elevatorSubsystem.setElevatorHeight(9));
+  m_driverController2.button(1).whileTrue(m_elevatorSubsystem.setElevatorHeight(0.2));
+  m_driverController2.button(2).whileTrue(m_elevatorSubsystem.setElevatorHeight(0.5));
+  m_driverController2.button(3).whileTrue(m_elevatorSubsystem.setElevatorHeight(1));
   m_driverController.button(1).whileTrue(driveFieldOrientedDirectAngleKeyboard);
   }
   
