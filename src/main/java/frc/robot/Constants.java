@@ -24,6 +24,59 @@ import static edu.wpi.first.units.Units.*;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
+
+  public static final Mechanism2d         sideRobotView = new Mechanism2d(Coral_Algae_Constants.kAlgaeArmLength * 2,
+  ElevatorConstants.kElevatorMaxHeight +
+         Coral_Algae_Constants.kAlgaeArmLength +
+         ElevatorConstants.kElevatorUnextendedHeight);
+public static final MechanismRoot2d     kElevatorCarriage;
+public static final MechanismRoot2d     kElevatorJoint; // For fixed elevator
+public static final MechanismLigament2d kAlgaeArmMech;
+public static final MechanismLigament2d kCoralArmMech;
+public static final MechanismLigament2d kElevatorTower;
+public static final MechanismLigament2d kElevatorFixed;
+public static final double              maxSpeed      = 7;
+
+
+static
+{
+  kElevatorCarriage = Constants.sideRobotView.getRoot("ElevatorCarriage",
+                                                      Coral_Algae_Constants.kAlgaeArmLength,
+                                                   ElevatorConstants.kElevatorStartingHeightSim.in(Meters) +
+                                                      ElevatorConstants.kElevatorUnextendedHeight);//The pivot
+  kAlgaeArmMech = kElevatorCarriage.append(
+      new MechanismLigament2d(
+          "AlgaeArm",
+          Coral_Algae_Constants.kAlgaeArmLength,
+          Coral_Algae_Constants.kAlgaeArmStartingAngle.in(Degrees),
+          6,
+          new Color8Bit(Color.kGreen)));
+  kCoralArmMech = kElevatorCarriage.append(
+      new MechanismLigament2d(
+          "CoraleArm",
+          Coral_Algae_Constants.kCoralArmLength,
+          Coral_Algae_Constants.kCoralArmStartingAngle.in(Degrees),
+          6,
+          new Color8Bit(Color.kPurple)));
+
+  kElevatorTower = kElevatorCarriage.append(new MechanismLigament2d(
+      "Elevator",
+      ElevatorConstants.kElevatorStartingHeightSim.in(Meters),
+      -90,
+      6,
+      new Color8Bit(Color.kRed)));
+
+  kElevatorJoint = Constants.sideRobotView.getRoot("ElevatorJoint",
+          Coral_Algae_Constants.kAlgaeArmLength,
+          ElevatorConstants.kElevatorUnextendedHeight);
+
+  kElevatorFixed = kElevatorJoint.append(new MechanismLigament2d("ElevatorFixed",
+          ElevatorConstants.kElevatorUnextendedHeight,
+          -90,
+          6,
+          new Color8Bit(Color.kPaleVioletRed)));
+}
+
   public static class OperatorConstants {
     public static final int kDriverControllerPort  = 0;
     public static final int kDriverControllerPort2 = 1;
@@ -63,27 +116,14 @@ public final class Constants {
     public static final double kElevatorDefaultTolerance = Inches.of(1).in(Meters);
     public static final      int      kElevatorCurrentLimit   = 40;
     public static final double   kElevatorAllowableError = Units.inchesToMeters(0.005);
-    public static double kLowerToScoreHeight =  Units.inchesToMeters(6);;
+    public static final double kLowerToScoreHeight =  Units.inchesToMeters(6);;
+        public static final double   kElevatorUnextendedHeight    = Units.inchesToMeters(41.5);
+      
   }
 
-  //public static final Mechanism2d sideview = new Mechanism2d(Inches.of(31).in(Meters) * 2, ElevatorConstants.kElevatorMaxHeight);
-  public static final Mechanism2d sideView = new Mechanism2d(Inches.of(31).in(Meters) * 2, ElevatorConstants.kElevatorMaxHeight);
-public static final MechanismRoot2d elevatorCarriage;
-public static final MechanismLigament2d elevatorMech;
 
 
 
-  static{
-    elevatorCarriage = Constants.sideView.getRoot("Elevator Carriage",
-                                                         ElevatorConstants.kElevatorStartingHeightSim.in(Meters),
-                                                        ElevatorConstants.kElevatorStartingHeightSim.in(Meters));
-  
-    elevatorMech = elevatorCarriage.append(new MechanismLigament2d("Elevator",
-                                                        ElevatorConstants.kElevatorLength,
-                                                        ElevatorConstants.kElevatorStartingAngle.in(Degrees),
-                                                        6,
-                                                        new Color8Bit(Color.kRed)));
-  }
 
   public static class IDConstants {
     public static final int Outtake_Left_ID = 11;
@@ -136,6 +176,11 @@ public static final MechanismLigament2d elevatorMech;
     public static final double kGroundIntakeSpeed = -0.3;
     
     public static final double kWristOffset = 141.0;
+
+    public static final double  kCoralArmLength                 = Inches.of(31).in(Meters);
+    public static final Angle   kCoralArmStartingAngle          = Degrees.of(0);
+    public static final double  kAlgaeArmLength                 = Inches.of(31).in(Meters);
+    public static final Angle   kAlgaeArmStartingAngle          = Degrees.of(0);
   }
 
   

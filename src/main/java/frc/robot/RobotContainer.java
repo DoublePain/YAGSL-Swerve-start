@@ -26,6 +26,7 @@ import frc.robot.commands.StopCoralCommand;
 import frc.robot.commands.GrabAlgaeCommand;
 import frc.robot.commands.StopAlgaeCommand;
 import frc.robot.commands.StowCommand;
+import frc.robot.subsystems.ElevatorSubsystem;
 
 
 /**
@@ -43,7 +44,7 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
 
   private final SwerveSubsystem      drivebase          =  new SwerveSubsystem();
-  //private final ElevatorSubsystem    elevator           =  new ElevatorSubsystem();
+  private final ElevatorSubsystem    elevator           =  new ElevatorSubsystem();
   private final CoralSubsystem       m_coralSubsystem   =  new CoralSubsystem();
   private final AlgaeSubsystem       algaeSubsystem     =  new AlgaeSubsystem();
   
@@ -117,7 +118,7 @@ public class RobotContainer {
 
 
    // elevator.setDefaultCommand(elevator.setElevatorHeight(1));
-   SmartDashboard.putData("Side View", Constants.sideView);
+   SmartDashboard.putData("Side View", Constants.sideRobotView);
     configureBindings();
     
     m_driverController.button(1).whileTrue(new GrabAlgaeCommand(algaeSubsystem));  // Button 1 for GrabAlgaeCommand
@@ -132,7 +133,10 @@ public class RobotContainer {
 
     //drivebase.setDefaultCommand(driveFieldOrientedAngularVelocity);
     SmartDashboard.putData(CommandScheduler.getInstance());
+
+    
   }
+  
 
   /**
    * Use this method to define your trigger->command mappings. Triggers can be created via the
@@ -156,13 +160,12 @@ public class RobotContainer {
       drivebase.setDefaultCommand(driveFieldOrientedAnglularVelocity);
     }
 
-//m_driverController.button(1).whileTrue(elevator.setElevatorHeight(4));
- 
-  // Example: Mapping button 1 to the `ScoreCoralCommand`
-  /*  m_driverController2.button(11).whileTrue(elevator.setGoal(3));
-   m_driverController2.button(12).whileTrue(elevator.setGoal(6));
-   m_driverController2.button(13).whileTrue(elevator.setGoal(9));
-   */
+  m_driverController2.button(1).whileTrue(elevator.setElevatorHeight(4));
+  m_driverController2.button(11).whileTrue(elevator.setGoal(3));
+  m_driverController2.button(12).whileTrue(elevator.setGoal(6));
+  m_driverController2.button(13).whileTrue(elevator.setGoal(9));
+   
+
    m_driverController.button(1).whileTrue(driveFieldOrientedDirectAngleKeyboard);
    
 }
