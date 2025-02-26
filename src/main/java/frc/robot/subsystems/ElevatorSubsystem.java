@@ -4,8 +4,11 @@ package frc.robot.subsystems;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.sim.SparkMaxSim;
 import com.revrobotics.spark.SparkBase;
+import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkLowLevel;
 import com.revrobotics.spark.SparkMax;
+import com.revrobotics.spark.SparkLowLevel.MotorType;
+import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.ElevatorFeedforward;
@@ -20,14 +23,16 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Constants.ElevatorConstants;
 //import frc.robot.Constants.AlgaeArmConstants;
+import com.revrobotics.spark.SparkBase.ResetMode;
 import edu. wpi. first. math. trajectory. TrapezoidProfile.Constraints;
 import frc.robot.RobotMath.Elevator;
 import static edu.wpi.first.units.Units.*;
 
 public class ElevatorSubsystem extends SubsystemBase {
     //setUp
-    private final DCMotor m_elevatorGearbox = DCMotor.getNEO(1);
-    private final SparkMax m_motor = new SparkMax(Constants.IDConstants.Elevator_Left_ID, SparkLowLevel.MotorType.kBrushless);
+    private final DCMotor m_elevatorGearbox = DCMotor.getNEO(2);
+    private final SparkMax m_motor = new SparkMax(Constants.IDConstants.Elevator_Left_ID, MotorType.kBrushless);
+    private final SparkMax m_motor2 = new SparkMax(Constants.IDConstants.Elevator_Right_ID,MotorType.kBrushless);
     private final SparkMaxSim m_motorSim = new SparkMaxSim(m_motor, m_elevatorGearbox);
     private final RelativeEncoder m_encoder = m_motor.getEncoder();
     private final ProfiledPIDController m_controller = new ProfiledPIDController(ElevatorConstants.Kelevatorkp,
@@ -36,44 +41,36 @@ public class ElevatorSubsystem extends SubsystemBase {
             new Constraints(ElevatorConstants.kMaxVelocity,
                     ElevatorConstants.KMaxAccel));
 
-                    private final DCMotor m_elevatorGearbox2 = DCMotor.getNEO(1);
-                    private final SparkMax m_motor2 = new SparkMax(Constants.IDConstants.Elevator_Left_ID, SparkLowLevel.MotorType.kBrushless);
-                    private final SparkMaxSim m_motorSim2 = new SparkMaxSim(m_motor, m_elevatorGearbox);
-                    private final RelativeEncoder m_encoder2 = m_motor.getEncoder();
-                    private final ProfiledPIDController m_controller2 = new ProfiledPIDController(ElevatorConstants.Kelevatorkp,
-                            ElevatorConstants.Kelevatorki,
-                            ElevatorConstants.Kelevatorkd,
-                            new Constraints(ElevatorConstants.kMaxVelocity,
-                                    ElevatorConstants.KMaxAccel));
-                                    
-    private final ElevatorFeedforward m_feedForward = new ElevatorFeedforward(ElevatorConstants.kElevatorS,
-            ElevatorConstants.kElevatorG,
-            ElevatorConstants.kElevatorV,
-            ElevatorConstants.kElevatorA);
+
+                    private final ElevatorFeedforward   m_feedforward =
+                    new ElevatorFeedforward(
+                        ElevatorConstants.kElevatorS,
+                        ElevatorConstants.kElevatorG,
+                        ElevatorConstants.kElevatorV,
+                        ElevatorConstants.kElevatorA);
+   
     private ElevatorSim m_elevatorSim = null;
     // Sensors
    
     public ElevatorSubsystem() {
-        SparkMaxConfig config = new SparkMaxConfig();
-        config.smartCurrentLimit(40)
-                .openLoopRampRate(ElevatorConstants.kElevatorRampRate);
+      
+          SparkMaxConfig config = new SparkMaxConfig();
+    config
+        .idleMode(IdleMode.kCoast)
+        .smartCurrentLimit(ElevatorConstants.kElevatorCurrentLimit)
+        .closedLoopRampRate(ElevatorConstants.kElevatorRampRate);
 
-        m_motor.configure(config, SparkBase.ResetMode.kNoResetSafeParameters, SparkBase.PersistMode.kPersistParameters);//
+    m_motor.configure(config, ResetMode.kNoResetSafeParameters, PersistMode.kPersistParameters);
 
-        if (RobotBase.isSimulation()) {
-            m_elevatorSim = new ElevatorSim(m_elevatorGearbox,
-                    ElevatorConstants.kElevatorGearing,
-                    ElevatorConstants.kElevatorCarriageMass,
-                    ElevatorConstants.kElevatorDrumRadius,
-                    ElevatorConstants.kElevatorMinHeight,
-                    ElevatorConstants.kElevatorMaxHeight,
-                    true,
-                    0.0,
-                    0.02,
-                    0.0);
+    SparkMaxConfig followerConfig = new SparkMaxConfig();
+    followerConfig
+            .idleMode(IdleMode.kCoast)
+            .smartCurrentLimit(ElevatorConstants.kElevatorCurrentLimit)
+            .closedLoopRampRate(ElevatorConstants.kElevatorRampRate)
+            .follow(m_motor, true);
 
-       
-        }
+    m_motor2.configure(followerConfig, ResetMode.kNoResetSafeParameters, PersistMode.kPersistParameters);
+
 
 
     }
@@ -107,8 +104,8 @@ public class ElevatorSubsystem extends SubsystemBase {
 
     public void reachGoal(double goal){
         double voltsOutput = MathUtil.clamp(
-                m_feedForward.calculateWithVelocities(getVelocityMetersPerSecond(), m_controller.getSetpoint().velocity)
                 + m_controller.calculate(getPositionMeters(), goal),
+                m_feedforward.calculateWithVelocities(getVelocityMetersPerSecond(), m_controller.getSetpoint().velocity)
                 -7,
                 7);
         m_motor.setVoltage(voltsOutput);

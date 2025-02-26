@@ -5,7 +5,7 @@
 package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
-import frc.robot.subsystems.ElevatorSubsystem;
+//import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.SwerveSubsystem;
 import swervelib.SwerveInputStream;
 import frc.robot.subsystems.AlgaeSubsystem;
@@ -43,7 +43,7 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
 
   private final SwerveSubsystem      drivebase          =  new SwerveSubsystem();
-  private final ElevatorSubsystem    elevator           =  new ElevatorSubsystem();
+  //private final ElevatorSubsystem    elevator           =  new ElevatorSubsystem();
   private final CoralSubsystem       m_coralSubsystem   =  new CoralSubsystem();
   private final AlgaeSubsystem       algaeSubsystem     =  new AlgaeSubsystem();
   
@@ -59,8 +59,8 @@ public class RobotContainer {
   
 
   SwerveInputStream driveAngularVelocity = SwerveInputStream.of(drivebase.getSwerveDrive(),
-                                                                () -> m_driverController.getLeftY()  ,
-                                                                () -> m_driverController.getLeftX()  )
+                                                                () -> m_driverController.getLeftY() * .2  ,
+                                                                () -> m_driverController.getLeftX() * .2 )
                                                             .withControllerRotationAxis(m_driverController::getRightX)
                                                             .deadband(OperatorConstants.deadband)
                                                             .scaleTranslation(0.5)
@@ -116,7 +116,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("test", Commands.print("I EXIST"));
 
 
-    elevator.setDefaultCommand(elevator.setElevatorHeight(1));
+   // elevator.setDefaultCommand(elevator.setElevatorHeight(1));
    SmartDashboard.putData("Side View", Constants.sideView);
     configureBindings();
     
@@ -156,12 +156,13 @@ public class RobotContainer {
       drivebase.setDefaultCommand(driveFieldOrientedAnglularVelocity);
     }
 
-m_driverController.button(1).whileTrue(elevator.setElevatorHeight(4));
+//m_driverController.button(1).whileTrue(elevator.setElevatorHeight(4));
  
   // Example: Mapping button 1 to the `ScoreCoralCommand`
-   m_driverController2.button(11).whileTrue(elevator.setGoal(3));
+  /*  m_driverController2.button(11).whileTrue(elevator.setGoal(3));
    m_driverController2.button(12).whileTrue(elevator.setGoal(6));
    m_driverController2.button(13).whileTrue(elevator.setGoal(9));
+   */
    m_driverController.button(1).whileTrue(driveFieldOrientedDirectAngleKeyboard);
    
 }

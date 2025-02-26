@@ -61,7 +61,8 @@ public final class Constants {
     public static final Angle kElevatorStartingAngle = Degrees.of(-90);
     public static final Distance kLaserCANOffset          = Inches.of(3);
     public static final double kElevatorDefaultTolerance = Inches.of(1).in(Meters);
-
+    public static final      int      kElevatorCurrentLimit   = 40;
+    public static final double   kElevatorAllowableError = Units.inchesToMeters(0.005);
     public static double kLowerToScoreHeight =  Units.inchesToMeters(6);;
   }
 
@@ -92,6 +93,7 @@ public static final MechanismLigament2d elevatorMech;
     public static final int Algae_Pivot_ID = 15;
     public static final int Algae_Intake_ID = 16;
     public static final int kLaserId = 17;
+    public static final int EkLaserID = 18;
     
   }
 
