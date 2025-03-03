@@ -20,8 +20,8 @@
         "y": 7.159784836065573
       },
       "prevControl": {
-        "x": 8.403381147540982,
-        "y": 6.128842213114755
+        "x": 8.211577868852459,
+        "y": 7.003944672131147
       },
       "nextControl": null,
       "isLocked": false,
@@ -42,7 +42,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -52.59464336859146
+    "rotation": -52.595
   },
   "reversed": false,
   "folder": "Mid two note",

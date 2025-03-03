@@ -8,10 +8,11 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.AlgaeSubsystem;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class StopAlgaeCommand extends Command {
-  /** Creates a new StopAlgaeCommand. */
+public class GroundIntakeAlgaeCommand extends Command {
+  /** Creates a new GroundIntakeAlgaeCommand. */
   private final AlgaeSubsystem algaeSubsystem;
-  public StopAlgaeCommand(AlgaeSubsystem algaeSubsystem) {
+
+  public GroundIntakeAlgaeCommand(AlgaeSubsystem algaeSubsystem) {
     this.algaeSubsystem = algaeSubsystem;
     addRequirements(algaeSubsystem);
     // Use addRequirements() here to declare subsystem dependencies.
@@ -24,7 +25,7 @@ public class StopAlgaeCommand extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    algaeSubsystem.stop();
+    algaeSubsystem.groundIntake();
   }
 
   // Called once the command ends or is interrupted.
@@ -33,8 +34,9 @@ public class StopAlgaeCommand extends Command {
     algaeSubsystem.stop();
   }
 
+  // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return true; // The command finishes immediately
+    return false;
   }
 }

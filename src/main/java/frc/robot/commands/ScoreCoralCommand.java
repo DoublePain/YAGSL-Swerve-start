@@ -14,21 +14,24 @@ public class ScoreCoralCommand extends Command {
     }
 
     @Override
-    public void initialize() {
-        if (level24) {
-            CoralSubsystem.scoreL24();  // Call the method for Level 24 scoring
-        } else {
-            CoralSubsystem.scoreL1();  // Call the method for Level 1 scoring
-        }
-    }
+    public void initialize() {}
 
     @Override
-    public boolean isFinished() {
-        return false;  // The command will run until explicitly interrupted
+  public void execute() {
+    if (level24) {
+        CoralSubsystem.scoreL24();  // Call the method for Level 24 scoring
+    } else {
+        CoralSubsystem.scoreL1();  // Call the method for Level 1 scoring
     }
+  }
 
     @Override
     public void end(boolean interrupted) {
         CoralSubsystem.stopCoral();  // Stop the coral subsystem when the command ends
+    }
+    
+    @Override
+    public boolean isFinished() {
+        return false;  // The command will run until explicitly interrupted
     }
 }

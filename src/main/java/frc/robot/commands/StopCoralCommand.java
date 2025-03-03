@@ -12,20 +12,23 @@ public class StopCoralCommand extends Command{
             addRequirements(CoralSubsystem);
         }
 
-        @Override
-        public void initialize() {
-            CoralSubsystem.stopCoral();
-        }
+    @Override
+    public void initialize() {}
 
-        @Override
-        public void end(boolean interrupted) {
-            CoralSubsystem.stopCoral();
-        }
+    @Override
+  public void execute() {
+    CoralSubsystem.stopCoral();
+  }
 
-        @Override
-        public boolean isFinished() {
-            return true;  // The command finishes immediately
-        }
+    @Override
+    public void end(boolean interrupted) {
+        CoralSubsystem.stopCoral();
+    }
+
+    @Override
+    public boolean isFinished() {
+        return true;  // The command finishes immediately
+    }
     }
     
 

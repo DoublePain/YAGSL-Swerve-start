@@ -6,7 +6,8 @@ package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.GrabAlgaeCommand;
-import frc.robot.commands.StopAlgaeCommand;
+import frc.robot.commands.GroundIntakeAlgaeCommand;
+import frc.robot.commands.ScoreAlgaeCommand;
 import frc.robot.commands.ScoreCoralCommand;
 import frc.robot.commands.StopCoralCommand;
 import frc.robot.subsystems.AlgaeSubsystem;
@@ -23,6 +24,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Commands;
+//import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
 // This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -35,12 +37,15 @@ public class RobotContainer {
   private final SwerveSubsystem drivebase = new SwerveSubsystem();
 
   private final CoralSubsystem m_coralSubsystem = new CoralSubsystem();
+  private final StopCoralCommand m_stopCoralCommand = new StopCoralCommand(m_coralSubsystem);
 
   private final ElevatorSubsystem m_elevatorSubsystem = new ElevatorSubsystem();
   
   private final AlgaeSubsystem m_algaeSubsystem = new AlgaeSubsystem();
   private final GrabAlgaeCommand m_grabAlgaeCommand = new GrabAlgaeCommand(m_algaeSubsystem);
-  private final StopAlgaeCommand m_stopAlgaeCommand = new StopAlgaeCommand(m_algaeSubsystem);
+  private final ScoreAlgaeCommand m_stopAlgaeCommand = new ScoreAlgaeCommand(m_algaeSubsystem);
+  private final ScoreAlgaeCommand m_scoreAlgaeCommand = new ScoreAlgaeCommand(m_algaeSubsystem);
+  private final GroundIntakeAlgaeCommand m_groundIntakeAlgaeCommand = new GroundIntakeAlgaeCommand(m_algaeSubsystem);
 
   private final CommandXboxController m_driverController = new CommandXboxController(OperatorConstants.kDriverControllerPort);
   private final CommandXboxController m_driverController2 = new CommandXboxController(OperatorConstants.kDriverControllerPort2);
@@ -49,13 +54,13 @@ public class RobotContainer {
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
 
-     SwerveInputStream driveAngularVelocity = SwerveInputStream.of(drivebase.getSwerveDrive(),
-                                                        () -> m_driverController.getLeftY(),
-                                                        () -> m_driverController.getLeftX() )
-                                                      .withControllerRotationAxis(m_driverController::getRightX)
-                                                      .deadband(OperatorConstants.deadband)
-                                                      .scaleTranslation(0.5)
-                                                      .allianceRelativeControl(true);
+   SwerveInputStream driveAngularVelocity = SwerveInputStream.of(drivebase.getSwerveDrive(),
+   () -> m_driverController.getLeftY(),
+   () -> m_driverController.getLeftX() )
+ .withControllerRotationAxis(m_driverController::getRightX)
+ .deadband(OperatorConstants.deadband)
+ .scaleTranslation(0.5)
+ .allianceRelativeControl(true);
 
   /**
    * Clone's the angular velocity input stream and converts it to a fieldRelative input stream.
@@ -124,19 +129,44 @@ public class RobotContainer {
       drivebase.setDefaultCommand(driveFieldOrientedAnglularVelocity);
     }
  
-    m_driverController.button(1).whileTrue(m_grabAlgaeCommand);  // Button 1 for GrabAlgaeCommand
-    m_driverController.button(1).whileFalse(m_stopAlgaeCommand);  // Button 1 for StopAlgaeCommand
+    m_driverController.button(1).whileTrue(m_grabAlgaeCommand);
+    m_driverController.button(1).whileFalse(m_stopAlgaeCommand);
 
-    m_driverController.button(2).whileTrue(new ScoreCoralCommand(m_coralSubsystem,true)); // Button 6 for ScoreCoralCommand
-    m_driverController.button(3).whileTrue(new ScoreCoralCommand(m_coralSubsystem,false)); 
+    m_driverController.button(2).whileTrue(m_scoreAlgaeCommand);
+    m_driverController.button(2).whileFalse(m_stopAlgaeCommand);
+
+    m_driverController.button(3).whileTrue(m_groundIntakeAlgaeCommand);
+    m_driverController.button(3).whileFalse(m_stopAlgaeCommand);
+
+
+    m_driverController.button(4).whileTrue(new ScoreCoralCommand(m_coralSubsystem,true));
+    m_driverController.button(5).whileTrue(new ScoreCoralCommand(m_coralSubsystem,false)); 
     
-    m_driverController.button(2).whileFalse(new StopCoralCommand(m_coralSubsystem)).and
-  (m_driverController.button(3).whileFalse(new StopCoralCommand(m_coralSubsystem)));  // Button 7 for StopCoralCommand
+    m_driverController.button(4).whileFalse(m_stopCoralCommand).and
+  (m_driverController.button(5).whileFalse(m_stopCoralCommand)); 
 
-  m_driverController2.button(1).whileTrue(m_elevatorSubsystem.setElevatorHeight(0.2));
-  m_driverController2.button(2).whileTrue(m_elevatorSubsystem.setElevatorHeight(0.5));
-  m_driverController2.button(3).whileTrue(m_elevatorSubsystem.setElevatorHeight(1));
   m_driverController.button(1).whileTrue(driveFieldOrientedDirectAngleKeyboard);
+
+  m_driverController2.button(1).whileTrue(m_elevatorSubsystem.setElevatorHeight(0.46));
+  m_driverController2.button(2).whileTrue(m_elevatorSubsystem.setElevatorHeight(0.81));
+  m_driverController2.button(3).whileTrue(m_elevatorSubsystem.setElevatorHeight(1.21));
+  m_driverController2.button(4).whileTrue(m_elevatorSubsystem.setElevatorHeight(1.83));
+
+  m_driverController2.button(1).whileFalse(m_elevatorSubsystem.stopMotor());
+  m_driverController2.button(2).whileFalse(m_elevatorSubsystem.stopMotor());
+  m_driverController2.button(3).whileFalse(m_elevatorSubsystem.stopMotor());
+  m_driverController2.button(4).whileFalse(m_elevatorSubsystem.stopMotor());
+  
+  /* m_driverController2.button(1).whileTrue(m_elevatorSubsystem.setElevatorHeight(0.46).andThen(new WaitCommand(3)).andThen(m_elevatorSubsystem.stopMotor()));
+  m_driverController2.button(2).whileTrue(m_elevatorSubsystem.setElevatorHeight(0.81).andThen(new WaitCommand(3)).andThen(m_elevatorSubsystem.stopMotor()));
+  m_driverController2.button(3).whileTrue(m_elevatorSubsystem.setElevatorHeight(1.21).andThen(new WaitCommand(3)).andThen(m_elevatorSubsystem.stopMotor()));
+  m_driverController2.button(4).whileTrue(m_elevatorSubsystem.setElevatorHeight(1.83).andThen(new WaitCommand(3)).andThen(m_elevatorSubsystem.stopMotor()));*/
+
+  /* m_driverController2.button(1).onTrue(m_elevatorSubsystem.setElevatorHeight(0.46).andThen(new ScoreCoralCommand(m_coralSubsystem,false)));
+  m_driverController2.button(2).whileTrue(m_elevatorSubsystem.setElevatorHeight(0.81).andThen(new ScoreCoralCommand(m_coralSubsystem, true)));
+  m_driverController2.button(3).whileTrue(m_elevatorSubsystem.setElevatorHeight(1.21).andThen(new ScoreCoralCommand(m_coralSubsystem, false)));
+  m_driverController2.button(4).whileTrue(m_elevatorSubsystem.setElevatorHeight(1.83).andThen(new ScoreCoralCommand(m_coralSubsystem, true))); */
+  
   }
   
 

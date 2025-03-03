@@ -25,8 +25,8 @@ public final class Constants {
 
   // Constants for controller IDs
   public static final class OperatorConstants {
-    public static final int kDriverControllerPort = 1;
-    public static final int kDriverControllerPort2 =0;
+    public static final int kDriverControllerPort = 0;
+    public static final int kDriverControllerPort2 =1;
     public static final double deadband = 0.05;
   }
 
@@ -48,21 +48,21 @@ public final class Constants {
 
   //Need to change all the constants later
   public static class ElevatorConstants{
-    public static final double kElevatorKp = 5;
-    public static final double kElevatorKi = 0;
-    public static final double kElevatorKd = 0;
-    public static final double kMaxVelocity = Meters.of(0.5).per(Second).in(MetersPerSecond);
-    public static final double kMaxAcceleration = Meters.of(0.3).per(Second).per(Second).in(MetersPerSecondPerSecond);
-    public static final double kElevatorkS = 0.02;
-    public static final double kElevatorkG = 0.9;
-    public static final double kElevatorkV = 3.8;
-    public static final double kElevatorkA = 0.17;
-    public static final double kElevatorRampRate = 0.1;
-    public static final double kElevatorGearing = 12;
-    public static final double kElevatorSproketTeeth = 22;
-    public static final double kElevatorPitch = Units.inchesToMeters(0.25);
+    public static final double kElevatorKp = 5;//need change
+    public static final double kElevatorKi = 0;//need change
+    public static final double kElevatorKd = 0;//need change
+    public static final double kMaxVelocity = Meters.of(0.5).per(Second).in(MetersPerSecond);//need change
+    public static final double kMaxAcceleration = Meters.of(0.3).per(Second).per(Second).in(MetersPerSecondPerSecond);//need change
+    public static final double kElevatorkS = 0.02;//need change
+    public static final double kElevatorkG = 0.9;//need change
+    public static final double kElevatorkV = 3.8;//need change
+    public static final double kElevatorkA = 0.17;//need change
+    public static final double kElevatorRampRate = 0.1;//need change
+    public static final double kElevatorGearing = 12;//need change
+    public static final double kElevatorSproketTeeth = 22;//need change
+    public static final double kElevatorPitch = Units.inchesToMeters(0.25);//need change
     public static final double kElevatorCarriageMass = Units.lbsToKilograms(16);
-    public static final double kElevatorDrumRadius = (kElevatorSproketTeeth * kElevatorPitch) / (2 *Math.PI);
+    public static final double kElevatorDrumRadius = (kElevatorSproketTeeth * kElevatorPitch) / (2 *Math.PI);//need change
     public static final double kElevatorMinHeightMeters = Units.inchesToMeters(0);
     public static final double kElevatorMaxHeightMeters = Units.inchesToMeters(30);
     public static final Distance kMinElevatorHeight      = Meters.of(kElevatorMinHeightMeters);
@@ -159,5 +159,10 @@ public final class Constants {
     public static final double kGroundIntakeSpeed = -0.3;
     
     public static final double kWristOffset = 141.0;
+
+    public static final double  kCoralArmLength                 = Inches.of(31).in(Meters);
+    public static final Angle   kCoralArmStartingAngle          = Degrees.of(0);
+    public static final double  kAlgaeArmLength                 = Inches.of(31).in(Meters);
+    public static final Angle   kAlgaeArmStartingAngle          = Degrees.of(0);
   }
 }

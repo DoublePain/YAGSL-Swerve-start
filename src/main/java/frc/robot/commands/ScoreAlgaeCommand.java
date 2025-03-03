@@ -3,19 +3,22 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.AlgaeSubsystem;
 
-public class StowCommand extends Command {
+public class ScoreAlgaeCommand extends Command {
 
     private final AlgaeSubsystem algaeSubsystem;
 
-    public StowCommand(AlgaeSubsystem algaeSubsystem) {
+    public ScoreAlgaeCommand(AlgaeSubsystem algaeSubsystem) {
         this.algaeSubsystem = algaeSubsystem;
         addRequirements(algaeSubsystem);  // Make sure the subsystem is required by this command
     }
 
     @Override
-    public void initialize() {
-        algaeSubsystem.stow();  // Call stow method from AlgaeSubsystem
-    }
+    public void initialize() {}
+
+    @Override
+  public void execute() {
+    algaeSubsystem.score();
+  }
 
     @Override
     public void end(boolean interrupted) {
@@ -24,6 +27,6 @@ public class StowCommand extends Command {
 
     @Override
     public boolean isFinished() {
-        return true;  // The command finishes immediately after being initialized
+        return false; 
     }
 }

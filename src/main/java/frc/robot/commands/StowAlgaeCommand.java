@@ -3,11 +3,11 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.AlgaeSubsystem;
 
-public class GrabAlgaeCommand extends Command {
+public class StowAlgaeCommand extends Command {
 
     private final AlgaeSubsystem algaeSubsystem;
 
-    public GrabAlgaeCommand(AlgaeSubsystem algaeSubsystem) {
+    public StowAlgaeCommand(AlgaeSubsystem algaeSubsystem) {
         this.algaeSubsystem = algaeSubsystem;
         addRequirements(algaeSubsystem);  // Make sure the subsystem is required by this command
     }
@@ -17,7 +17,7 @@ public class GrabAlgaeCommand extends Command {
 
     @Override
   public void execute() {
-    algaeSubsystem.grabAlgae();
+    algaeSubsystem.stow();
   }
 
     @Override
@@ -27,6 +27,6 @@ public class GrabAlgaeCommand extends Command {
 
     @Override
     public boolean isFinished() {
-        return false;  
+        return false; 
     }
 }

@@ -2,8 +2,14 @@ package frc.robot.subsystems;
 
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import com.revrobotics.spark.SparkLowLevel.MotorType;
+
+import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkMax;
+import com.revrobotics.spark.SparkBase.PersistMode;
+import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
+import com.revrobotics.spark.config.SparkMaxConfig;
+import com.revrobotics.spark.SparkLowLevel.MotorType;
+
 import au.grapplerobotics.LaserCan;
 import frc.robot.Constants;
 import edu.wpi.first.wpilibj.smartdashboard.*;
@@ -12,9 +18,9 @@ public class CoralSubsystem extends SubsystemBase {
 
 
     // Laser can for detecting coral and Outtake motors
-    private SparkMax m_LeftMotor;
-    private SparkMax m_RightMotor;
-    private LaserCan m_LaserCAN;
+    private final SparkMax m_LeftMotor = new SparkMax(Constants.IDConstants.Outtake_Left_ID, MotorType.kBrushless);
+    private final SparkMax m_RightMotor = new SparkMax(Constants.IDConstants.Outtake_Right_ID, MotorType.kBrushless);
+    private final LaserCan m_LaserCAN = new LaserCan(Constants.IDConstants.kLaserId);
 
     public enum IntakeState {
         NONE,
@@ -28,10 +34,19 @@ public class CoralSubsystem extends SubsystemBase {
     private IntakeState mState = IntakeState.NONE;
 
     public CoralSubsystem() {
-        // Initialize hardware
-        m_LeftMotor = new SparkMax(Constants.IDConstants.Outtake_Left_ID, MotorType.kBrushless);
-        m_RightMotor = new SparkMax(Constants.IDConstants.Outtake_Right_ID, MotorType.kBrushless);
-        m_LaserCAN = new LaserCan(Constants.IDConstants.kLaserId);
+        SparkMaxConfig config = new SparkMaxConfig();
+        config
+            .idleMode(IdleMode.kCoast)
+            .smartCurrentLimit(20);
+        m_LeftMotor.configure(config, ResetMode.kNoResetSafeParameters, PersistMode.kPersistParameters);
+
+        SparkMaxConfig followerConfig = new SparkMaxConfig();
+        followerConfig
+            .idleMode(IdleMode.kCoast)
+            .smartCurrentLimit(20)
+            .follow(m_LeftMotor, true);
+        m_RightMotor.configure(followerConfig, ResetMode.kNoResetSafeParameters, PersistMode.kPersistParameters);
+            
 
         // Laser sensor configuration
         try {
@@ -48,7 +63,6 @@ public class CoralSubsystem extends SubsystemBase {
     // Method to set the speed of both motors
     public void setSpeed(double speed) {
         m_LeftMotor.set(speed);
-        m_RightMotor.set(-speed);
     }
 
     // Methods to control the intake and outtake

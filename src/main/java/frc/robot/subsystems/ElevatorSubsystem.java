@@ -139,7 +139,6 @@ public class ElevatorSubsystem extends SubsystemBase
             .follow(m_motor, true);
 
     m_motorRight.configure(followerConfig, ResetMode.kNoResetSafeParameters, PersistMode.kPersistParameters);
-    //followerConfig.inverted(true);
 
     // Publish Mechanism2d to SmartDashboard
     // To view the Elevator visualization, select Network Tables -> SmartDashboard -> Elevator Sim
@@ -289,12 +288,16 @@ public class ElevatorSubsystem extends SubsystemBase
   }
 
 
+
   /**
    * Stop the control loop and motor output.
    */
-  public void stop()
-  {
-    m_motor.set(0.0);
+  public void stop(){
+    m_motor.set(0);
+  }
+
+  public Command stopMotor(){
+    return run(() -> stop());
   }
 
   /**
